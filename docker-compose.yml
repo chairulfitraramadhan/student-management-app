@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Service untuk Database MongoDB
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Mapping port DB ke laptop Anda
+    volumes:
+      - mongodb_data:/data/db # Menyimpan data DB secara persisten
+
+  # Service untuk Backend FastAPI
+  backend:
+    build: ./backend # Menunjuk ke folder backend/Dockerfile
+    ports:
+      - "8001:8001" # Mapping port backend ke laptop Anda
+    environment:
+      # Gunakan 'mongodb' (nama service) sebagai host
+      - MONGO_URL=mongodb://mongodb:27017 
+      - DB_NAME=student_management_db
+      - JWT_SECRET_KEY=kunci_rahasia_uts_docker
+    depends_on:
+      - mongodb # Backend baru akan jalan setelah mongodb jalan
+
+  # Service untuk Frontend React
+  frontend:
+    build: ./frontend # Menunjuk ke folder frontend/Dockerfile
+    ports:
+      - "3000:3000" # Mapping port frontend ke laptop Anda
+    environment:
+      # Arahkan ke backend yang juga berjalan di laptop (via port mapping)
+      - REACT_APP_BACKEND_URL=http://localhost:8001
+    depends_on:
+      - backend # Frontend baru akan jalan setelah backend jalan
+
+volumes:
+  mongodb_data: # Volume untuk menyimpan data MongoDB
