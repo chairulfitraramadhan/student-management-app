@@ -1,14 +1,11 @@
 name: Python/Node.js CI/CD
 
-# Pipeline ini akan berjalan setiap kali ada push ke branch 'main'
 on:
   push:
-    branches: [ "main" ] # Ganti 'main' jika nama branch   beda (misal: 'master')
+    branches: [ "master" ]
 
 jobs:
-  # -----------------
   # PEKERJAAN CI (Continuous Integration)
-  # -----------------
   build-and-test:
     name: Build & Test
     runs-on: ubuntu-latest # Menjalankan di server Linux
@@ -45,9 +42,7 @@ jobs:
         # --watchAll=false penting agar 'test' tidak berjalan interaktif
         yarn test --watchAll=false
 
-  # -----------------
   # PEKERJAAN CD (Continuous Deployment)
-  # -----------------
   build-and-push-docker:
     name: Build & Push Docker Images
     runs-on: ubuntu-latest
@@ -71,7 +66,6 @@ jobs:
       with:
         context: ./backend # Menunjuk ke folder backend
         push: true
-        # Ganti 'chairulfitraramadhan' dengan username Docker Hub  
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/student-app-backend:latest
 
     # 3. Build dan Push image Frontend
@@ -80,5 +74,4 @@ jobs:
       with:
         context: ./frontend # Menunjuk ke folder frontend
         push: true
-        # Ganti 'chairulfitraramadhan' dengan username Docker Hub  
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/student-app-frontend:latest
