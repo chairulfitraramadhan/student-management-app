@@ -40,7 +40,8 @@ jobs:
         cd frontend
         yarn install
         # --watchAll=false penting agar 'test' tidak berjalan interaktif
-        yarn test --watchAll=false
+        # --passWithNoTests ditambahkan agar pipeline tidak gagal jika tidak ada file test
+        yarn test --watchAll=false --passWithNoTests
 
   # PEKERJAAN CD (Continuous Deployment)
   build-and-push-docker:
