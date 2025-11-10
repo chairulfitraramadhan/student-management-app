@@ -1,6 +1,7 @@
 # Student Management System
 
 Aplikasi web untuk manajemen data mahasiswa dengan fitur autentikasi JWT dan role-based access control (Admin & User).
+'Test CI/CD'
 
 ## Fitur Utama
 
@@ -213,7 +214,7 @@ DELETE /api/students/{student_id}
 Authorization: Bearer <token>
 ```
 
-## 🐳 Docker Support
+## Docker Support
 
 Aplikasi ini sudah siap untuk containerization menggunakan Docker. Struktur frontend dan backend terpisah memudahkan untuk membuat Docker container individual.
 
