@@ -1,8 +1,8 @@
-# Sistem Manajemen Data Mahasiswa
+# Student Management System
 
 Aplikasi web untuk manajemen data mahasiswa dengan fitur autentikasi JWT dan role-based access control (Admin & User).
 
-## 🚀 Fitur Utama
+## Fitur Utama
 
 - **Autentikasi JWT**: Login dan registrasi dengan JWT token
 - **Role-Based Access**:
@@ -12,7 +12,7 @@ Aplikasi web untuk manajemen data mahasiswa dengan fitur autentikasi JWT dan rol
 - **Filter & Search**: Cari mahasiswa berdasarkan nama, NIM, email, program studi, dan angkatan
 - **Modern UI**: Interface yang responsif dan modern dengan Tailwind CSS
 
-## 📋 Data Mahasiswa
+## Data Mahasiswa
 
 Setiap mahasiswa memiliki field:
 - NIM (Nomor Induk Mahasiswa)
@@ -21,7 +21,7 @@ Setiap mahasiswa memiliki field:
 - Program Studi
 - Angkatan
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **FastAPI**: Web framework Python modern dan cepat
@@ -37,7 +37,7 @@ Setiap mahasiswa memiliki field:
 - **Tailwind CSS**: Utility-first CSS framework
 - **Sonner**: Toast notifications
 
-## 📦 Prerequisites
+## Prerequisites
 
 Pastikan Anda telah menginstall:
 - Python 3.8+
@@ -45,7 +45,7 @@ Pastikan Anda telah menginstall:
 - MongoDB
 - Yarn (package manager)
 
-## 🚀 Instalasi dan Menjalankan Lokal
+## Instalasi dan Menjalankan Lokal
 
 ### 1. Clone Repository
 
@@ -104,7 +104,7 @@ sudo systemctl start mongod
 mongod --dbpath /path/to/data/directory
 ```
 
-## 🔑 Akun Default
+## Akun Default
 
 Untuk mulai menggunakan aplikasi, Anda perlu membuat akun melalui halaman registrasi.
 
@@ -120,7 +120,7 @@ Untuk mulai menggunakan aplikasi, Anda perlu membuat akun melalui halaman regist
 3. Pilih role "User" (default)
 4. Klik "Daftar"
 
-## 📖 API Documentation
+## API Documentation
 
 ### Authentication Endpoints
 
@@ -288,14 +288,14 @@ volumes:
   mongodb_data:
 ```
 
-## 🔒 Security Notes
+## Security Notes
 
 1. **JWT Secret Key**: Pastikan menggunakan secret key yang kuat dan random untuk production
 2. **Password**: Password di-hash menggunakan bcrypt sebelum disimpan ke database
 3. **CORS**: Konfigurasi CORS sudah diatur, pastikan untuk membatasi origin di production
 4. **HTTPS**: Gunakan HTTPS untuk production deployment
 
-## 📱 Fitur UI
+## Fitur UI
 
 - **Responsive Design**: Tampilan optimal di desktop dan mobile
 - **Modern Interface**: Menggunakan gradient dan glass-morphism effect
@@ -304,7 +304,7 @@ volumes:
 - **Modal Forms**: Form untuk tambah/edit data dalam modal
 - **Real-time Search**: Filter dan search yang responsive
 
-## 🧪 Testing
+## Testing
 
 ### Test Backend API dengan curl:
 
@@ -323,19 +323,3 @@ curl -X POST http://localhost:8001/api/auth/login \
 curl -X GET http://localhost:8001/api/students \
   -H "Authorization: Bearer TOKEN"
 ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 📞 Support
-
-Jika Anda mengalami masalah atau memiliki pertanyaan, silakan buat issue di repository ini.
-
----
-
-**Dibuat dengan ❤️ untuk manajemen data mahasiswa yang lebih baik**
