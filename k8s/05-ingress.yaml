@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: student-ingress
+  namespace: student-system
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # Penting agar frontend bisa akses API tanpa masalah CORS/Path
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: student.local
+    http:
+      paths:
+      # Route untuk Backend API (misal: student.local/api/users)
+      - path: /api/(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend-service
+            port:
+              number: 8001
+      # Route untuk Frontend (Root domain)
+      - path: /(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 3000

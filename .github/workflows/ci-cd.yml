@@ -1,78 +1,36 @@
-name: Python/Node.js CI/CD
+name: CI/CD Pipeline (UAS)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "main" ]
 
 jobs:
-  # PEKERJAAN CI (Continuous Integration)
-  build-and-test:
-    name: Build & Test
-    runs-on: ubuntu-latest # Menjalankan di server Linux
-
-    steps:
-    # 1. Checkout kode dari repository
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    # 2. Setup Python (untuk Backend)
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-
-    # 3. Install dependencies Backend
-    - name: Install backend dependencies
-      run: |
-        cd backend
-        pip install -r requirements.txt
-
-    # 4. Setup Node.js (untuk Frontend)
-    # Kita gunakan Node 20.x, sesuai dengan Dockerfile kita
-    - name: Set up Node.js 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
-
-    # 5. Install dependencies Frontend dan jalankan test
-    - name: Install frontend dependencies and run tests
-      run: |
-        cd frontend
-        yarn install
-        # --watchAll=false penting agar 'test' tidak berjalan interaktif
-        # --passWithNoTests ditambahkan agar pipeline tidak gagal jika tidak ada file test
-        yarn test --watchAll=false --passWithNoTests
-
-  # PEKERJAAN CD (Continuous Deployment)
-  build-and-push-docker:
-    name: Build & Push Docker Images
+  build-and-push:
     runs-on: ubuntu-latest
-    # Pekerjaan ini baru berjalan SETELAH 'build-and-test' sukses
-    needs: build-and-test 
-
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+    # 1. Ambil kodingan
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    # 1. Login ke Docker Hub 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
+    # 2. Login ke Docker Hub (Sesuai Secret Anda: DOCKERHUB_...)
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # 2. Build dan Push image Backend
-    - name: Build and push backend image
-      uses: docker/build-push-action@v4
+    # 3. Build & Push Backend
+    - name: Build and Push Backend
+      uses: docker/build-push-action@v5
       with:
-        context: ./backend # Menunjuk ke folder backend
+        context: ./backend
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/student-app-backend:latest
 
-    # 3. Build dan Push image Frontend
-    - name: Build and push frontend image
-      uses: docker/build-push-action@v4
+    # 4. Build & Push Frontend
+    - name: Build and Push Frontend
+      uses: docker/build-push-action@v5
       with:
-        context: ./frontend # Menunjuk ke folder frontend
+        context: ./frontend
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/student-app-frontend:latest

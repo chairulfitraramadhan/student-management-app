@@ -267,6 +267,10 @@ async def delete_student(student_id: str, current_user: dict = Depends(require_a
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Student not found")
     return {"message": "Student deleted successfully"}
+# Health Check Endpoint
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 # Include router
 app.include_router(api_router)
