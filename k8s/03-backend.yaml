@@ -4,7 +4,7 @@ metadata:
   name: backend-deployment
   namespace: student-system
 spec:
-  replicas: 2 # (Syarat Soal: Replica 2)
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -15,7 +15,6 @@ spec:
     spec:
       containers:
       - name: backend
-        # Gunakan username Docker Hub Anda yang asli
         image: chairul01/student-app-backend:latest 
         imagePullPolicy: Always
         ports:
@@ -25,14 +24,13 @@ spec:
             name: backend-config
         - secretRef:
             name: backend-secrets
-        resources: # (Wajib untuk HPA)
+        resources:
           requests:
             cpu: "100m"
             memory: "128Mi"
           limits:
             cpu: "500m"
             memory: "512Mi"
-        # Health Check (Syarat Soal: Stability)
         livenessProbe:
           httpGet:
             path: /health
